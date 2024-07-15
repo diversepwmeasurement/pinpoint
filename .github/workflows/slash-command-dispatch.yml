@@ -1,14 +1,15 @@
-name: Slash Command Dispatch
-on:
-  issue_comment:
-    types: [created]
 jobs:
   slashCommandDispatch:
-    runs-on: ubuntu-22.04
+    runs-on: self-hosted
     steps:
-      - name: Slash Command Dispatch
-        uses: peter-evans/slash-command-dispatch@v2
-        with:
-          token: ${{ secrets.REPO_ACCESS_TOKEN }}
-          commands: it
-          repository: pinpoint-apm/pinpoint
+    - continue-on-error: true
+      name: Slash Command Dispatch
+      uses: peter-evans/slash-command-dispatch@v2
+      with:
+        commands: it
+        repository: pinpoint-apm/pinpoint
+        token: ${{ secrets.REPO_ACCESS_TOKEN }}
+name: Slash Command Dispatch
+on:
+  repository_dispatch:
+    types: trigger-ga___slash-command-dispatch.yml
